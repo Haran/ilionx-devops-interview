@@ -25,7 +25,7 @@ I know that repository mirroring exists, but here I prefer to have manual contro
    1. [Preparation and sanity checks](doc/TASK1.md:1)
    2. [Packing to docker, simple](doc/TASK1.md:28)
    3. [Packing to docker, multistage, with compilation](doc/TASK1.md:40)
-   4. Using Gitlab CI/CD
-   5. Using Github Actions
+   4. [Using Gitlab CI/CD](doc/TASK1.md:75)
+   5. [Using Github Actions](doc/TASK1.md:91)
 2. Task 2
 3. Task 3
