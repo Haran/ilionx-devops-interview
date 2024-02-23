@@ -1,0 +1,38 @@
+---
+- hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: SubTask - Docker installation
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - ca-certificates
+        - apt-transport-https
+        - software-properties-common
+
+    - ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - ansible.builtin.apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+        update_cache: true
+
+    # todo: version pinning is highly recommended
+    - ansible.builtin.apt:
+        name: docker-ce
+        state: latest
+
+    - ansible.builtin.user:
+        name: vagrant
+        groups: docker
+        append: yes
+
+    - ansible.builtin.systemd_service:
+        name: docker
+        state: restarted
+        enabled: true
