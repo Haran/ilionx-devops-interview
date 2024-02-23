@@ -1,0 +1,11 @@
+name: dummy
+
+on:
+  - workflow_dispatch
+
+jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: dummy
+        run: env
