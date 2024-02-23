@@ -1,0 +1,25 @@
+---
+- hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: SubTask - Create system-wide aliases
+      ansible.builtin.blockinfile:
+        dest: "/etc/bash.bashrc"
+        backup: true
+        append_newline: true
+        prepend_newline: true
+        validate: bash -n %s
+        block: |
+          alias d='docker'
+          alias dc='docker compose'
+
+    - name: SubTask - Create root:root file in /etc/topsecret.txt
+      ansible.builtin.copy:
+        dest: "/etc/topsecret.txt"
+        owner: root
+        group: root
+        mode: "0600"
+        content: |
+          t0ps3cr3t

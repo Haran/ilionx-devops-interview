@@ -14,3 +14,7 @@ install-docker: ## Install DockerCE, make it run with vagrant user, enable autos
 .PHONY: helloworld
 helloworld: ## Compile helloworld application, pack it to docker and run in container
 	ansible-playbook -c local -i localhost, helloworld-playbook.yml
+
+.PHONY: os-tweaks
+os-tweaks: ## Add system wide docker aliases and a secret file in /etc
+	ansible-playbook -c local -i localhost, os-playbook.yml
