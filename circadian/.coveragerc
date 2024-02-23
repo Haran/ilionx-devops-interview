@@ -1,0 +1,6 @@
+[coverage:report]
+skip_empty = true
+
+[paths]
+source =
+    src/
