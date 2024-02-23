@@ -10,3 +10,7 @@ info:
 .PHONY: install-docker
 install-docker: ## Install DockerCE, make it run with vagrant user, enable autostart
 	ansible-playbook -c local -i localhost, docker-playbook.yml
+
+.PHONY: helloworld
+helloworld: ## Compile helloworld application, pack it to docker and run in container
+	ansible-playbook -c local -i localhost, helloworld-playbook.yml

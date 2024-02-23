@@ -1,0 +1,29 @@
+---
+- hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Subtask - Build docker image with helloworld
+      community.docker.docker_image:
+        build:
+          path: /projects/helloworld/
+          dockerfile: Dockerfile.multistage
+          rm: true
+        name: ilionx-helloworld
+        push: false
+        source: build
+
+    # todo: remove if it's not necessary to cleanup build artifacts
+    - community.docker.docker_prune:
+        images: yes
+
+    - community.docker.docker_container:
+        name: ilionx-helloworld
+        image: ilionx-helloworld
+        state: started
+        detach: true
+        restart_policy: unless-stopped
+        cpus: 1
+        memory: 512M
+        ports:
+          - "6543:8080"
