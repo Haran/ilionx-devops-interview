@@ -1,5 +1,7 @@
 # Stage 1, we use JDK as builder
 FROM eclipse-temurin:21.0.2_13-jdk-jammy as builder
+LABEL org.opencontainers.image.source="https://github.com/Haran/ilionx-devops-interview"
+LABEL org.opencontainers.image.description="Demo image with Spring Boot Hello World application"
 
 # Entire helloworld project goes here
 WORKDIR /opt/helloworld

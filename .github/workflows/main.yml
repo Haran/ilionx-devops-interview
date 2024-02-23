@@ -1,11 +1,24 @@
-name: dummy
+name: Build Docker Image
 
 on:
   - workflow_dispatch
 
 jobs:
-  dummy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: dummy
-        run: env
+      - name: Checkout repository
+        uses: actions/checkout@main
+
+      - name: 'Login to GitHub Container Registry'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Build and push Docker image
+        run: |
+          cd helloworld
+          docker build -t ghcr.io/haran/ilionx-devops-interview:latest -f Dockerfile.multistage .
+          docker push ghcr.io/haran/ilionx-devops-interview:latest
