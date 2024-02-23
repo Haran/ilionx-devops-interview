@@ -1,0 +1,19 @@
+# Stage 1, we use JDK as builder
+FROM eclipse-temurin:21.0.2_13-jdk-jammy as builder
+
+# Entire helloworld project goes here
+WORKDIR /opt/helloworld
+COPY . .
+
+# Compilation itself
+RUN /opt/helloworld/gradlew clean build
+
+# Stage 2, we use JRE as runtime
+FROM eclipse-temurin:21.0.2_13-jre-jammy
+
+# We take only compiled JAR file
+WORKDIR /app
+COPY --from=builder /opt/helloworld/build/libs/helloworld.jar /app/
+
+HEALTHCHECK --interval=10s --timeout=5s CMD curl -f http://localhost:8080 || exit 1
+ENTRYPOINT ["java", "-jar", "/app/helloworld.jar"]
