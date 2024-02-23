@@ -1,0 +1,23 @@
+stages:
+  - build
+
+variables:
+  REGISTRY_URL: "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME"
+
+build:
+  stage: build
+  image: docker:24.0.5
+  services:
+    - name: docker:24.0.5-dind
+      alias: docker
+  before_script:
+    - docker info
+    - echo $CI_JOB_TOKEN | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - cd helloworld
+    - docker build -t $REGISTRY_URL/ilionx-helloworld -f Dockerfile.multistage .
+    - docker push $REGISTRY_URL/ilionx-helloworld
+  when: manual

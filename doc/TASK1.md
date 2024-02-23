@@ -69,3 +69,20 @@ $ docker image ls | grep ilionx | awk '{print $7}'
 > Time logged here ~20-30 minutes
 
 ----
+
+### Building in pipeliens
+
+#### Gitlab CI/CD
+
+- I'm more familiar with Gitlab so will start with it by creating `.gitlab-ci.yml` to use Gitlab DinD
+- It's triggered as `manual` in order not to waste resources and rebuild image on every push
+- Luckily I haven't spent all my free minutes, don't want to mess with self-hosted runner :)
+- Wait for pipeline to succeed, verify Container Registry has new image
+- Create personal token and pull-run image locally:
+    ```
+    $ TOKEN=xxxxxx
+    $ docker login registry.gitlab.com -u olegs.capligins --password-stdin <<<$TOKEN
+    $ docker run --name ilinox-helloworld -p6543:8080 registry.gitlab.com/olegs.capligins/ilionx-devops-interview/ilionx-helloworld
+    ```
+- Fun fact - locally image size shows 313MB, while on Gitlab it is 114.12 MiB, as it is either compressed, or only the last layer. Lies, deception.
+
