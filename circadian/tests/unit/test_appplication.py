@@ -1,7 +1,7 @@
 import pytest
 import dateutil.parser
 from datetime import datetime
-from circadian.src.application import make_decision
+from ...src.application import make_decision
 
 '''
 list[
