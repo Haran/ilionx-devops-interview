@@ -4,3 +4,7 @@ skip_empty = true
 [paths]
 source =
     src/
+
+[run]
+omit =
+    tests/*

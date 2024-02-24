@@ -28,7 +28,3 @@ lint: venv-check ## Check syntax against lint rules
 test: venv-check ## Run unit tests with coverage
 	@coverage run -m pytest
 	@coverage report -m
-
-.PHONY: build
-build: venv-check ## Compile
-	 pyinstaller --onefile --clean ./main.py
